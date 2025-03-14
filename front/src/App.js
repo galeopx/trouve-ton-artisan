@@ -6,7 +6,7 @@ import Home from './pages/Home';
 import CategoryList from './pages/CategoryList';
 import ArtisanDetail from './pages/ArtisanDetail';
 import NotFound from './pages/NotFound';
-import './styles/main.scss';
+import './styles/main.css';
 
 function App() {
   return (
