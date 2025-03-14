@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { getArtisansDuMois } from '../services/artisanService';
 
 const Home = () => {
   const [artisansDuMois, setArtisansDuMois] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   
   useEffect(() => {
     const fetchArtisansDuMois = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/artisans/mois');
-        setArtisansDuMois(response.data);
+        setLoading(true);
+        const data = await getArtisansDuMois();
+        setArtisansDuMois(data);
       } catch (error) {
         console.error('Erreur lors de la récupération des artisans du mois:', error);
+        setError('Impossible de charger les artisans du mois');
+      } finally {
+        setLoading(false);
       }
     };
     
@@ -65,28 +71,39 @@ const Home = () => {
 
       <section>
         <h2 className="mb-4">Les artisans du mois</h2>
-        <div className="row">
-          {artisansDuMois.map(artisan => (
-            <div className="col-md-4 mb-4" key={artisan.id}>
-              <div className="card h-100 artisan-card">
-                <div className="card-body">
-                  <h5 className="card-title">{artisan.nom}</h5>
-                  <div className="mb-2">
-                    {Array(5).fill().map((_, i) => (
-                      <span key={i} className="text-warning">
-                        {i < Math.floor(artisan.note) ? '★' : '☆'}
-                      </span>
-                    ))}
-                    <span className="ms-1">({artisan.note})</span>
+        
+        {loading && <p>Chargement en cours...</p>}
+        
+        {error && <div className="alert alert-danger">{error}</div>}
+        
+        {!loading && !error && (
+          <div className="row">
+            {artisansDuMois.length > 0 ? (
+              artisansDuMois.map(artisan => (
+                <div className="col-md-4 mb-4" key={artisan.id}>
+                  <div className="card h-100 artisan-card">
+                    <div className="card-body">
+                      <h5 className="card-title">{artisan.nom}</h5>
+                      <div className="mb-2">
+                        {Array(5).fill().map((_, i) => (
+                          <span key={i} className="text-warning">
+                            {i < Math.floor(artisan.note) ? '★' : '☆'}
+                          </span>
+                        ))}
+                        <span className="ms-1">({artisan.note})</span>
+                      </div>
+                      <p className="card-text">{artisan.specialite?.nom}</p>
+                      <p className="card-text"><small className="text-muted">{artisan.localisation}</small></p>
+                      <Link to={`/artisan/${artisan.id}`} className="btn btn-primary">Voir détails</Link>
+                    </div>
                   </div>
-                  <p className="card-text">{artisan.specialite?.nom}</p>
-                  <p className="card-text"><small className="text-muted">{artisan.localisation}</small></p>
-                  <Link to={`/artisan/${artisan.id}`} className="btn btn-primary">Voir détails</Link>
                 </div>
-              </div>
-            </div>
-          ))}
-        </div>
+              ))
+            ) : (
+              <p>Aucun artisan du mois à afficher.</p>
+            )}
+          </div>
+        )}
       </section>
     </div>
   );
