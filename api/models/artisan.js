@@ -11,16 +11,16 @@ const Artisan = sequelize.define('artisan', {
     type: DataTypes.STRING(150),
     allowNull: false
   },
-  photo: {
-    type: DataTypes.STRING(255),
-    allowNull: true
+  specialite_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false
   },
   note: {
     type: DataTypes.DECIMAL(2, 1),
     defaultValue: 0
   },
-  localisation: {
-    type: DataTypes.STRING(150),
+  ville: {
+    type: DataTypes.STRING(100),
     allowNull: false
   },
   a_propos: {
@@ -35,13 +35,9 @@ const Artisan = sequelize.define('artisan', {
     type: DataTypes.STRING(255),
     allowNull: true
   },
-  specialite_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
-  date_creation: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW
+  top: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
   }
 }, {
   tableName: 'artisans',
