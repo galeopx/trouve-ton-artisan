@@ -107,12 +107,12 @@ exports.searchArtisans = async (req, res) => {
   }
 };
 
-// Récupérer les artisans du mois (3 artisans avec les meilleures notes)
+// Récupérer les artisans du mois (ceux marqués comme "top")
 exports.getArtisansDuMois = async (req, res) => {
   try {
+    // Important: Nous utilisons maintenant le champ "top" au lieu du tri par note
     const artisans = await Artisan.findAll({
-      order: [['note', 'DESC']],
-      limit: 3,
+      where: { top: true },
       include: [
         { 
           model: Specialite, 
@@ -143,8 +143,8 @@ exports.contactArtisan = async (req, res) => {
       return res.status(404).json({ message: 'Artisan non trouvé' });
     }
     
-    // Le brief parle de contacter les artisans pour des renseignements
-    // Cependantje vais simplement simuler l'envoi d'un email pour de pas utiliser Nodemailer. 
+  // Le brief parle de contacter les artisans pour des renseignements
+  // Cependantje vais simplement simuler l'envoi d'un email pour de pas utiliser Nodemailer.
     console.log(`Email envoyé à ${artisan.email} de la part de ${nom} (${email})`);
     console.log(`Objet: ${objet}`);
     console.log(`Message: ${message}`);
