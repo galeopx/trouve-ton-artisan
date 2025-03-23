@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import logo from '../assets/images/Logo.png';
 
 const Header = () => {
   const [categories, setCategories] = useState([]);
@@ -30,7 +31,15 @@ const Header = () => {
       <div className="container">
         <nav className="navbar navbar-expand-lg navbar-light">
           <Link className="navbar-brand" to="/">
-          <span className="h3">Trouve ton artisan</span>
+          <img 
+              src={logo} 
+              alt="Logo Trouve ton artisan" 
+              className="d-inline-block align-top img-fluid"
+              style={{ 
+                maxHeight: "120px", 
+                width: "auto" 
+              }}
+            />
           </Link>
           
           <button 
