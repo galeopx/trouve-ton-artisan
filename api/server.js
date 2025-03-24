@@ -16,6 +16,10 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(helmet());
+app.use(cors({
+  origin: ['http://localhost:3000', 'https://dazzling-cactus-c45fa3.netlify.app/'],
+  credentials: true
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -41,11 +45,3 @@ app.use((req, res) => {
 app.listen(PORT, () => {
   console.log(`Serveur démarré sur le port ${PORT}`);
 });
-
-//Ceci permettra à netlify de pouvoir recevoir les données
-const cors = require('cors');
-
-app.use(cors({
-  origin: ['http://localhost:3000', 'https://votre-site.netlify.app'],
-  credentials: true
-}));
