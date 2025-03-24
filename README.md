@@ -23,8 +23,9 @@ Cette application permet aux particuliers de trouver facilement un artisan et de
 
 1. Créez une base de données MySQL nommée `trouve_ton_artisan`
 2. Exécutez les scripts SQL dans cet ordre :
-   - `database/create_database.sql`
-   - `database/seed_database.sql`
+   - `database/trouve_ton_artisan_categories.sql`
+   - `database/trouve_ton_artisan_specialites.sql`
+   - `database/trouve_ton_artisan_artisans.sql`
 
 ## Technologies utilisées
 
