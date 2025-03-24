@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getArtisansDuMois } from '../services/artisanService';
+import api from '../services/api';
 
 const Home = () => {
   const [artisansDuMois, setArtisansDuMois] = useState([]);
@@ -11,11 +11,12 @@ const Home = () => {
     const fetchArtisansDuMois = async () => {
       try {
         setLoading(true);
-        const data = await getArtisansDuMois();
-        setArtisansDuMois(data);
+        const response = await api.get('/artisans/mois');
+        setArtisansDuMois(response.data);
+        setError(null);
       } catch (error) {
         console.error('Erreur lors de la récupération des artisans du mois:', error);
-        setError('Impossible de charger les artisans du mois');
+        setError('Impossible de charger les artisans du mois.');
       } finally {
         setLoading(false);
       }
@@ -93,7 +94,7 @@ const Home = () => {
                         <span className="ms-1">({artisan.note})</span>
                       </div>
                       <p className="card-text">{artisan.specialite?.nom}</p>
-                      <p className="card-text"><small className="text-muted">{artisan.localisation}</small></p>
+                      <p className="card-text"><small className="text-muted">{artisan.ville}</small></p>
                       <Link to={`/artisan/${artisan.id}`} className="btn btn-primary">Voir détails</Link>
                     </div>
                   </div>
