@@ -42,3 +42,11 @@ app.use((req, res) => {
 app.listen(PORT, () => {
   console.log(`Serveur démarré sur le port ${PORT}`);
 });
+
+//Ceci permettra à netlify de pouvoir recevoir les données
+const cors = require('cors');
+
+app.use(cors({
+  origin: ['http://localhost:3000', 'https://votre-site.netlify.app'],
+  credentials: true
+}));
