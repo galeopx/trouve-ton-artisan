@@ -17,7 +17,7 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 app.use(helmet());
 app.use(cors({
-  origin: ['http://localhost:3000', 'https://dazzling-cactus-c45fa3.netlify.app/'],
+  origin: ['http://localhost:3000', 'https://profound-klepon-dcdb26.netlify.app'],
   credentials: true
 }));
 app.use(express.json());
